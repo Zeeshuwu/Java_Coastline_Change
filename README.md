@@ -1,3 +1,4 @@
+
 # Java Coastline Change Analysis 1990–2025
 ### Automated Satellite-Derived Shoreline Extraction with Tidal Correction and DSAS-Equivalent Change Analysis
 
@@ -23,7 +24,7 @@ The shoreline extraction methodology is built upon the **CoastSat framework** (V
 > GitHub: https://github.com/kvos/CoastSat
 
 This framework is adapted from methods developed in the author's Master's thesis:
->
+
 > Putra, M.Z.R. (2025). *The Development of a Tidally Corrected Automatic
 > Coastline Extraction Framework for Supporting Indonesia's Maritime Baseline
 > Monitoring*. Master's Thesis, Geomatic Engineering, Universitas Gadjah Mada,
@@ -43,24 +44,14 @@ This framework is adapted from methods developed in the author's Master's thesis
 ## Repository Structure
 
 ```
-├── Part1_GEE/
-│   └── coastline_extraction.js       # Google Earth Engine extraction script
-│
-├── Part2_TidalCorrection/
-│   ├── tidal_slr_correction.py       # FES2022 tidal + SLR vertical offset
-│   ├── fes2022_indonesia_clipped.yaml
-│   └── fes2022_resolved.yaml         # auto-generated at runtime
-│
-├── Part3_DSAS/
-│   └── dsas_analysis.py              # EPR / LRR / NSM transect analysis
-│
-├── shorelines/                       # GEE-exported raw shorelines (.shp/.geojson)
-├── shorelines_corrected/             # Output from Part 2 (tidal-corrected)
-├── output_dsas/                      # Output from Part 3 (metrics + maps)
-│
+├── extraction_Image.js        # Part 1 — Google Earth Engine extraction script
+├── Tidal_Correction.py        # Part 2 — FES2022 tidal + SLR vertical offset
+├── Shoreline_Changes.py       # Part 3 — EPR / LRR / NSM transect analysis
 ├── requirements.txt
 └── README.md
 ```
+
+> **Note:** Output folders (`shorelines/`, `shorelines_corrected/`, `output_dsas/`) and FES2022 NetCDF model files are not included in this repository. See setup instructions below.
 
 ---
 
@@ -96,7 +87,7 @@ For single-site, interactive shoreline extraction with full sub-pixel accuracy, 
 
 ## Part 1 — Coastline Extraction (Google Earth Engine)
 
-**File:** `Part1_GEE/coastline_extraction.js`
+**File:** `extraction_Image.js`
 
 ### What it does
 - Loads Landsat 4, 5, 7, 8, 9 collections (1990–2025)
@@ -120,10 +111,10 @@ For single-site, interactive shoreline extraction with full sub-pixel accuracy, 
 
 ### Setup
 1. Open [Google Earth Engine Code Editor](https://code.earthengine.google.com)
-2. Paste the contents of `coastline_extraction.js`
+2. Paste the contents of `extraction_Image.js`
 3. Define your ROI geometry as `ROI8` (or rename the variable at the top)
 4. Run and submit export tasks to Google Drive
-5. Download exported files into the `shorelines/` folder
+5. Download exported files into a local `shorelines/` folder
 
 ### Naming convention expected by Part 2
 ```
@@ -137,7 +128,7 @@ Shoreline_2025_Line.shp
 
 ## Part 2 — Tidal & SLR Correction (Python)
 
-**File:** `Part2_TidalCorrection/tidal_slr_correction.py`
+**File:** `Tidal_Correction.py`
 
 ### What it does
 Extends the CoastSat tidal correction approach (Vos et al., 2019) using FES2022 instead of FES2014, with additional vertical offset components:
@@ -177,7 +168,7 @@ shorelines_corrected/
 
 ## Part 3 — DSAS-Equivalent Change Analysis (Python)
 
-**File:** `Part3_DSAS/dsas_analysis.py`
+**File:** `Shoreline_Changes.py`
 
 ### What it does
 Implements the fundamental transect-based principles of the Digital Shoreline Analysis System (DSAS; Himmelstoss et al., 2021), extended with automated batch-processing across all epochs without manual intervention:
@@ -227,8 +218,8 @@ output_dsas/
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/java-coastline-change.git
-cd java-coastline-change
+git clone https://github.com/Zeeshuwu/Java_Coastline_Change.git
+cd Java_Coastline_Change
 pip install -r requirements.txt
 ```
 
@@ -243,12 +234,10 @@ pip install -r requirements.txt
 # Step 1: Run GEE script in browser, download exports to shorelines/
 
 # Step 2: Tidal correction
-cd Part2_TidalCorrection
-python tidal_slr_correction.py
+python Tidal_Correction.py
 
 # Step 3: DSAS analysis
-cd ../Part3_DSAS
-python dsas_analysis.py
+python Shoreline_Changes.py
 ```
 
 ---
@@ -290,10 +279,29 @@ https://doi.org/10.5194/os-17-615-2021
 Abidin, H.Z., Andreas, H., Gumilar, I., Fukuda, Y., Pohan, Y.E., Deguchi, T. (2011).
 Land subsidence of Jakarta (Indonesia) and its relation with urban development.
 Natural Hazards, 59(3), 1753–1771.
-
+```
 
 ---
 
 ## License
 
 MIT License — free to use and adapt with attribution.
+```
+
+The key changes made to match your actual structure:
+
+| Old (wrong) | Fixed |
+|---|---|
+| `Part1_GEE/coastline_extraction.js` | `extraction_Image.js` |
+| `Part2_TidalCorrection/tidal_slr_correction.py` | `Tidal_Correction.py` |
+| `Part3_DSAS/dsas_analysis.py` | `Shoreline_Changes.py` |
+| `cd Part2_TidalCorrection && python ...` | `python Tidal_Correction.py` |
+| Generic GitHub URL | `https://github.com/Zeeshuwu/Java_Coastline_Change.git` |
+
+Paste this into your `README.md`, save, then push:
+
+```bash
+git add README.md
+git commit -m "Fix README to match actual flat file structure"
+git push
+```
