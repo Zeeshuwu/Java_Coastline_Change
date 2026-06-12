@@ -286,22 +286,3 @@ Natural Hazards, 59(3), 1753–1771.
 ## License
 
 MIT License — free to use and adapt with attribution.
-```
-
-The key changes made to match your actual structure:
-
-| Old (wrong) | Fixed |
-|---|---|
-| `Part1_GEE/coastline_extraction.js` | `extraction_Image.js` |
-| `Part2_TidalCorrection/tidal_slr_correction.py` | `Tidal_Correction.py` |
-| `Part3_DSAS/dsas_analysis.py` | `Shoreline_Changes.py` |
-| `cd Part2_TidalCorrection && python ...` | `python Tidal_Correction.py` |
-| Generic GitHub URL | `https://github.com/Zeeshuwu/Java_Coastline_Change.git` |
-
-Paste this into your `README.md`, save, then push:
-
-```bash
-git add README.md
-git commit -m "Fix README to match actual flat file structure"
-git push
-```
